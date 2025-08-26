@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Transplante Renal</title>
+  <meta name="description" content="Site interativo e educativo sobre transplante renal em São José dos Campos: conceito, indicações, fila, compatibilidade, mitos e verdades, fluxo local e quiz." />
+  <style>
+    :root{
+      --bg:#0b1020;         /* fundo escuro elegante */
+      --panel:#131a33;      /* cartões */
+      --accent:#30d158;     /* verde doação */
+      --accent-2:#5ea0ff;   /* azul informativo */
+      --text:#eef2ff;       /* texto principal */
+      --muted:#aab3d1;      /* texto secundário */
+      --danger:#ff6b6b;     /* avisos */
+      --ok:#2bd4a7;         /* correto */
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+      --radius:20px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0; padding:0; background:linear-gradient(180deg,#091126,#0b1020); color:var(--text); font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,'Helvetica Neue',Arial,'Noto Sans',sans-serif;}
+    a{color:var(--accent-2)}
+    header{
+      position:sticky; top:0; z-index:50; backdrop-filter:blur(12px);
+      background:linear-gradient(180deg,rgba(11,16,32,.85),rgba(11,16,32,.55)); border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .wrap{max-width:1100px; margin:0 auto; padding:0 18px}
+    .row{display:flex; gap:12px; align-items:center; justify-content:space-between}
+    .brand{display:flex; gap:14px; align-items:center; padding:14px 0}
+    .brand .logo{width:42px; height:42px; border-radius:50%; display:grid; place-items:center; background:radial-gradient(80% 80% at 50% 30%, var(--accent) 0%, var(--accent-2) 60%, #7c4dff 100%); box-shadow:var(--shadow)}
+    .brand h1{font-size:18px; margin:0; letter-spacing:.3px}
+    nav{display:flex; flex-wrap:wrap; gap:8px; padding:8px 0 14px}
+    nav button{
+      background:transparent; border:1px solid rgba(255,255,255,.14); color:var(--text); padding:10px 14px; border-radius:999px; cursor:pointer; font-weight:600; letter-spacing:.2px;
+      transition:all .2s ease; backdrop-filter:blur(6px);
+    }
+    nav button:hover{transform:translateY(-2px); border-color:rgba(255,255,255,.28)}
+    nav button.active{background:var(--accent-2); border-color:var(--accent-2); color:#0b1020}
+
+    .hero{padding:40px 0 22px}
+    .hero .card{background:linear-gradient(180deg, rgba(48,209,88,.16), rgba(94,160,255,.06)); border:1px solid rgba(255,255,255,.08); box-shadow:var(--shadow); border-radius:var(--radius); padding:24px; display:grid; gap:14px}
+    .hero h2{font-size:26px; margin:0}
+    .hero p{color:var(--muted); margin:0}
+
+    main{padding:22px 0 70px}
+    section.panel{display:none; background:var(--panel); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow); margin:14px 0}
+    section.panel.active{display:block}
+    section.panel h3{margin:0 0 10px 0; font-size:22px}
+    section.panel p, li{color:#d6defa; line-height:1.6}
+    .grid{display:grid; gap:14px}
+    @media(min-width:800px){.grid.cols-2{grid-template-columns:1fr 1fr} .grid.cols-3{grid-template-columns:repeat(3,1fr)}}
+
+    .chip{display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); padding:6px 10px; border-radius:999px; font-size:12px; font-weight:700; letter-spacing:.3px; text-transform:uppercase; color:#cfe9ff}
+
+    .timeline{position:relative; padding-left:22px}
+    .timeline::before{content:""; position:absolute; left:8px; top:4px; bottom:4px; width:2px; background:linear-gradient(#5ea0ff,transparent)}
+    .step{position:relative; margin:14px 0; padding-left:10px}
+    .step::before{content:""; position:absolute; left:-12px; top:6px; width:14px; height:14px; border-radius:50%; background:var(--accent-2); box-shadow:0 0 0 3px rgba(94,160,255,.25)}
+
+    .kv{display:grid; grid-template-columns: 1.2fr 1fr; gap:16px}
+    @media(max-width:840px){.kv{grid-template-columns:1fr}}
+    .card{background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:16px}
+
+    .myths{display:grid; gap:12px}
+    @media(min-width:800px){.myths{grid-template-columns:repeat(3,1fr)}}
+    .myth{position:relative; overflow:hidden; min-height:140px; cursor:pointer}
+    .myth .tag{position:absolute; top:12px; left:12px}
+    .myth .front, .myth .back{transition:transform .5s;}
+    .myth .front{transform:translateY(0)}
+    .myth .back{position:absolute; inset:0; transform:translateY(100%)}
+    .myth.active .front{transform:translateY(-100%)}
+    .myth.active .back{transform:translateY(0)}
+
+    .flow{display:grid; gap:12px}
+    @media(min-width:880px){.flow{grid-template-columns:repeat(4,1fr)}}
+    .node{border-left:4px solid var(--accent-2)}
+    .node h4{margin:0 0 6px 0}
+    .node p{margin:0}
+
+    .quiz{display:grid; gap:12px}
+    .q-card{padding:16px; border-radius:14px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.04)}
+    .answers{display:grid; gap:10px; margin-top:10px}
+    .answers button{border:1px solid rgba(255,255,255,.16); background:transparent; color:var(--text); padding:10px 12px; border-radius:12px; cursor:pointer; text-align:left}
+    .answers button:hover{border-color:rgba(255,255,255,.32)}
+    .answers button.correct{background:rgba(43,212,167,.2); border-color:var(--ok)}
+    .answers button.wrong{background:rgba(255,107,107,.2); border-color:var(--danger)}
+
+    .pledge{display:flex; flex-wrap:wrap; align-items:center; gap:12px}
+    .big{font-size:40px; font-weight:800; letter-spacing:.5px}
+    .btn{background:var(--accent); color:#07131a; border:none; padding:12px 16px; border-radius:12px; font-weight:800; cursor:pointer}
+    .btn.secondary{background:transparent; color:var(--text); border:1px solid rgba(255,255,255,.18)}
+
+    footer{opacity:.85; font-size:13px; color:var(--muted); padding:26px 0 60px}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="row">
+        <div class="brand">
+          <div class="logo" aria-hidden="true">🩺</div>
+          <h1>Transplante Renal — São José dos Campos</h1>
+        </div>
+        <nav aria-label="Seções do site">
+          <button class="tab active" data-target="#intro">Início</button>
+          <button class="tab" data-target="#conceito">Conceito</button>
+          <button class="tab" data-target="#indicacoes">Indicações</button>
+          <button class="tab" data-target="#fila">Fila & Compatibilidade</button>
+          <button class="tab" data-target="#caminho">Passo a passo</button>
+          <button class="tab" data-target="#mitos">Mitos & Verdades</button>
+          <button class="tab" data-target="#sjc">SJC & Logística</button>
+          <button class="tab" data-target="#quiz">Quiz</button>
+          <button class="tab" data-target="#apoio">Apoio à doação</button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap hero">
+    <div class="card">
+      <span class="chip">Feira educativa — Curso Técnico de Enfermagem</span>
+      <h2>Como o transplante de rim salva vidas — de forma clara e sem mitos</h2>
+      <p>Explore os cards abaixo: quando o transplante é indicado, como funciona a <b>fila única</b>, quem pode doar (vivo e falecido), riscos, logística e o fluxo em <b>São José dos Campos</b>. No fim, teste seu conhecimento no <b>quiz</b> e deixe seu apoio 💚.</p>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <section id="intro" class="panel active">
+      <div class="kv">
+        <div class="card">
+          <h3>O que você vai encontrar aqui</h3>
+          <ul>
+            <li>Definição simples de transplante renal.</li>
+            <li>Indicações e principais causas de falência renal.</li>
+            <li>Como a compatibilidade e a fila funcionam (sem “furar fila”).</li>
+            <li>O caminho do paciente, da avaliação à cirurgia e ao pós-operatório.</li>
+            <li>Fluxo local do Vale do Paraíba (captação → alocação → implante).</li>
+            <li>Mitos & verdades que mais confundem as pessoas.</li>
+            <li>Quiz rápido para aprender brincando.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Resumo em 30 segundos</h3>
+          <p>O transplante renal substitui a função do rim doente com um rim saudável de <b>doador vivo</b> ou <b>falecido</b>. A seleção do receptor segue regras técnicas de <b>compatibilidade</b> e <b>prioridades</b> transparentes na <b>lista única</b>. Depois da cirurgia, o paciente usa <b>imunossupressores</b> e faz seguimento para manter o enxerto funcionando por muitos anos.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="conceito" class="panel">
+      <h3>Conceito & Fisiologia Essencial</h3>
+      <div class="grid cols-2">
+        <div class="card">
+          <p><b>Transplante renal</b> é a cirurgia que implanta um rim saudável para substituir a função renal em pessoas com <b>doença renal crônica estágio 5</b> (insuficiência renal terminal). Não “cura” a DRC: precisa de <b>imunossupressão</b> contínua e acompanhamento.</p>
+          <p><b>Funções dos rins:</b> filtração (uréia/creatinina), equilíbrio de água e eletrólitos, ácido–base, produção de <b>eritropoetina</b> e ativação da <b>vitamina D</b>.</p>
+        </div>
+        <div class="card">
+          <ul>
+            <li><b>Néfrons</b> — as unidades filtrantes (≈ 1 milhão por rim).</li>
+            <li><b>Ureter</b> leva a urina até a bexiga; <b>artérias/veias renais</b> fazem o fluxo sanguíneo.</li>
+            <li><b>Implante</b> do rim na fossa ilíaca com anastomoses vasculares e reimplante ureteral.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="indicacoes" class="panel">
+      <h3>Indicações & Principais Causas</h3>
+      <div class="grid cols-3">
+        <div class="card">
+          <h4>Quando indicar?</h4>
+          <ul>
+            <li>DRC <b>estágio 5</b> (TFG &lt; 15 mL/min/1,73 m²), com ou sem diálise.</li>
+            <li>Preferência quando há <b>doador vivo compatível</b> (pode ser pré-emptivo).</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Causas frequentes</h4>
+          <ul>
+            <li><b>Diabetes</b> e <b>hipertensão</b></li>
+            <li><b>Glomerulopatias</b> (ex.: GESF, IgA)</li>
+            <li><b>Doença policística</b> e hereditárias</li>
+            <li>Causas autoimunes, obstrutivas ou tóxicas</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Benefícios</h4>
+          <ul>
+            <li>Maior <b>sobrevida</b> e <b>qualidade de vida</b> que na diálise</li>
+            <li>Menos restrições e maior autonomia</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="fila" class="panel">
+      <h3>Fila Única & Compatibilidade — “Quem passa na frente e por quê?”</h3>
+      <div class="grid cols-2">
+        <div class="card">
+          <h4>Critérios principais</h4>
+          <ul>
+            <li><b>ABO</b> (tipo sanguíneo) e <b>HLA</b> (A, B, DR, ± DQ)</li>
+            <li><b>Prova cruzada</b> negativa e análise de <b>anticorpos</b> (PRA/DSA)</li>
+            <li><b>Prioridades</b>: 0-mismatch HLA, <b>pediatria</b>, hipersensibilizados</li>
+            <li><b>Tempo em lista</b> e <b>alocação regional</b> quando não há prioridade</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Desmistificando</h4>
+          <ul>
+            <li>Não existe “<b>furar fila por ser famoso</b>”.</li>
+            <li>A seleção é técnica e auditada; a oferta segue regras.</li>
+            <li>Órgãos <b>pediátricos</b> tendem a ir para receptores pediátricos.</li>
+            <li>0‑mismatch pode <b>priorizar</b> um receptor de outra região.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="caminho" class="panel">
+      <h3>Do diagnóstico ao transplante</h3>
+      <div class="timeline">
+        <div class="step"><b>1) Avaliação nefrológica</b> — confirmar indicação e otimizar saúde.</div>
+        <div class="step"><b>2) Preparo</b> — exames, sorologias, tipagem <b>ABO/HLA</b>, avaliação cardiológica, odontológica, psicológica e vacinação.</div>
+        <div class="step"><b>3) Inscrição na lista</b> — cadastro no sistema oficial pela equipe.</div>
+        <div class="step"><b>4) Doação</b> — <b>falecido</b> (com autorização da família) ou <b>vivo</b> (parente/cônjuge; não aparentado com autorização judicial).</div>
+        <div class="step"><b>5) Convocação</b> — quando surge compatibilidade; faz‑se <b>prova cruzada</b>.</div>
+        <div class="step"><b>6) Cirurgia</b> — implante na fossa ilíaca com reimplante ureteral.</div>
+        <div class="step"><b>7) Pós-operatório</b> — UTI/enfermaria, imunossupressão e educação para alta.</div>
+      </div>
+    </section>
+
+    <section id="mitos" class="panel">
+      <h3>Mitos & Verdades</h3>
+      <div class="myths">
+        <div class="myth card" tabindex="0">
+          <span class="chip tag">Mito</span>
+          <div class="front"><h4>“Doação desfigura o corpo.”</h4><p>Toque para ver a verdade.</p></div>
+          <div class="back"><h4>Verdade</h4><p>O corpo é recomposto com respeito. A família pode realizar despedida com dignidade.</p></div>
+        </div>
+        <div class="myth card" tabindex="0">
+          <span class="chip tag">Mito</span>
+          <div class="front"><h4>“Só famoso transplanta rápido.”</h4><p>Toque para ver a verdade.</p></div>
+          <div class="back"><h4>Verdade</h4><p>A <b>fila é única</b> e segue compatibilidade, prioridades e tempo de espera. É auditada.</p></div>
+        </div>
+        <div class="myth card" tabindex="0">
+          <span class="chip tag">Mito</span>
+          <div class="front"><h4>“Quem não está em diálise não transplanta.”</h4><p>Toque para ver a verdade.</p></div>
+          <div class="back"><h4>Verdade</h4><p>É possível <b>transplante pré‑emptivo</b>, principalmente com doador vivo compatível.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sjc" class="panel">
+      <h3>Fluxo em São José dos Campos (Vale do Paraíba)</h3>
+      <div class="flow">
+        <div class="card node">
+          <h4>1) Doador (hospital local)</h4>
+          <p>Diagnóstico de <b>morte encefálica</b>, entrevista familiar e autorização. Atuação da <b>CIHDOTT</b>.</p>
+        </div>
+        <div class="card node">
+          <h4>2) OPO / Central</h4>
+          <p>Notifica, avalia o órgão, coordena a <b>alocação</b> conforme regras (ABO/HLA/prioridades).</p>
+        </div>
+        <div class="card node">
+          <h4>3) Logística</h4>
+          <p><b>Transporte terrestre/aéreo</b> para reduzir tempo de isquemia (ideal &lt; 24–36 h; máximo ~48 h).</p>
+        </div>
+        <div class="card node">
+          <h4>4) Implante</h4>
+          <p><b>Centro transplantador</b> realiza a cirurgia e o seguimento pós‑operatório.</p>
+        </div>
+      </div>
+      <p style="margin-top:10px; color:#b9c7ef"></p>
+    </section>
+
+    <section id="quiz" class="panel">
+      <h3>Quiz Rápido (3 perguntas)</h3>
+      <div class="quiz" id="quizBox"></div>
+      <div id="quizResult" class="card" style="display:none"></div>
+      <div class="row" style="margin-top:10px; gap:10px">
+        <button class="btn" id="retryBtn" style="display:none">Refazer</button>
+        <button class="btn secondary" id="showAnswersBtn" style="display:none">Ver gabarito</button>
+      </div>
+    </section>
+
+    <section id="apoio" class="panel">
+      <h3>Deixe seu apoio à doação 💚</h3>
+      <div class="pledge">
+        <button class="btn" id="pledgeBtn">Quero apoiar</button>
+        <button class="btn secondary" id="resetPledgeBtn" title="Limpa apenas neste dispositivo">Limpar meu voto</button>
+        <div class="card"><div class="big" id="pledgeCount">0</div><div>apoios nesta bancada</div></div>
+      </div>
+      <p style="margin-top:10px; color:#b9c7ef"></p>
+    </section>
+  </main>
+
+  <footer class="wrap">
+    <p>Material educativo sem fins lucrativos. Consulte serviços oficiais para orientações e regras atualizadas sobre transplantes e doação no Brasil.</p>
+    <p>Equipe: Eliana, Gustavo, Icaro, Isabelli e Suzane | Curso: Tec. Enfermagem | IEP — São José dos Campos</p>
+  </footer>
+
+  <script>
+    // Navegação por abas
+    const tabs=[...document.querySelectorAll('.tab')];
+    const panels=[...document.querySelectorAll('section.panel')];
+    tabs.forEach(btn=>btn.addEventListener('click',()=>{
+      tabs.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const sel = btn.getAttribute('data-target');
+      panels.forEach(p=>p.classList.toggle('active', `#${p.id}`===sel));
+      window.scrollTo({top:0, behavior:'smooth'});
+    }));
+
+    // Mitos & Verdades: flip on click/keyboard
+    document.querySelectorAll('.myth').forEach(card=>{
+      const toggle=()=>card.classList.toggle('active');
+      card.addEventListener('click',toggle);
+      card.addEventListener('keypress',e=>{if(e.key==='Enter' || e.key===' '){e.preventDefault(); toggle();}})
+    });
+
+    // Quiz
+    const quizData=[
+      {
+        q:'Qual é o principal objetivo do transplante renal?',
+        a:['Curar definitivamente a DRC','Substituir a função do rim doente','Permitir suspender todo medicamento','Evitar qualquer exame futuro'],
+        c:1,
+        exp:'O transplante <b>substitui</b> a função do rim e requer acompanhamento e imunossupressão.'
+      },
+      {
+        q:'O que pode dar prioridade na fila para um rim?',
+        a:['Ser famoso','0‑mismatch HLA, pediatria, hipersensibilização','Ter mais seguidores','Hospital privado'],
+        c:1,
+        exp:'Prioridades técnicas incluem 0‑mismatch, pediatria e hipersensibilização, além de compatibilidade e tempo em lista.'
+      },
+      {
+        q:'Sobre doação em vida, qual é verdadeiro?',
+        a:['Qualquer pessoa pode doar sem avaliação','Apenas quem tem a mesma altura','Precisa de avaliação rigorosa e compatibilidade','Sempre precisa de autorização judicial'],
+        c:2,
+        exp:'Doação em vida exige avaliação clínica/psicológica, compatibilidade e consentimento; autorização judicial só para não aparentados.'
+      }
+    ];
+
+    const quizBox=document.getElementById('quizBox');
+    const quizResult=document.getElementById('quizResult');
+    const retryBtn=document.getElementById('retryBtn');
+    const showAnswersBtn=document.getElementById('showAnswersBtn');
+
+    let score=0, answered=0, locked=false;
+
+    function renderQuiz(){
+      quizBox.innerHTML=''; score=0; answered=0; locked=false; quizResult.style.display='none'; retryBtn.style.display='none'; showAnswersBtn.style.display='none';
+      quizData.forEach((item,idx)=>{
+        const card=document.createElement('div'); card.className='q-card';
+        const q=document.createElement('div'); q.innerHTML=`<b>${idx+1})</b> ${item.q}`; card.appendChild(q);
+        const answers=document.createElement('div'); answers.className='answers';
+        item.a.forEach((text,i)=>{
+          const btn=document.createElement('button'); btn.textContent=text;
+          btn.addEventListener('click',()=>{
+            if(btn.classList.contains('correct')||btn.classList.contains('wrong')) return;
+            const correct=item.c===i;
+            if(correct){ btn.classList.add('correct'); score++; } else { btn.classList.add('wrong'); }
+            [...answers.children].forEach((b,j)=>{ if(j===item.c) b.classList.add('correct'); b.disabled=true; });
+            answered++; if(answered===quizData.length) finishQuiz();
+          });
+          answers.appendChild(btn);
+        });
+        card.appendChild(answers); quizBox.appendChild(card);
+      });
+    }
+
+    function finishQuiz(){
+      quizResult.style.display='block';
+      const pct=Math.round((score/quizData.length)*100);
+      quizResult.innerHTML=`<b>Resultado:</b> ${score}/${quizData.length} acertos (${pct}%).<br><small>${pct>=67?'Mandou bem! ✅':'Boa! Reveja os cards e tente de novo. 😉'}</small>`;
+      retryBtn.style.display='inline-block'; showAnswersBtn.style.display='inline-block';
+    }
+
+    retryBtn.addEventListener('click',renderQuiz);
+    showAnswersBtn.addEventListener('click',()=>{
+      // Revela explicações
+      const cards=[...document.querySelectorAll('.q-card')];
+      cards.forEach((c,idx)=>{
+        const exp=document.createElement('div'); exp.style.marginTop='8px'; exp.style.opacity='.9'; exp.innerHTML=`<small>${quizData[idx].exp}</small>`; c.appendChild(exp);
+      });
+      showAnswersBtn.disabled=true; showAnswersBtn.textContent='Gabarito exibido';
+    });
+
+    renderQuiz();
+
+    // Apoio à doação — contador local
+   resetBtn.addEventListener('click', () => {
+  localStorage.removeItem(myVoteKey);  // remove o voto do usuário
+  localStorage.setItem(pledgeKey, '0'); // reseta o contador total
+  pledgeCountEl.textContent = '0';      // atualiza visualmente
+  pledgeBtn.textContent = 'Quero apoiar';
+});
+
+    const getCount=()=>parseInt(localStorage.getItem(pledgeKey)||'0',10);
+    const setCount=(n)=>{localStorage.setItem(pledgeKey,String(n)); pledgeCountEl.textContent=n;}
+    setCount(getCount());
+
+    pledgeBtn.addEventListener('click',()=>{
+      if(localStorage.getItem(myVoteKey)){
+        alert('Obrigado! Seu apoio já foi registrado neste dispositivo.'); return;
+      }
+      setCount(getCount()-1); localStorage.setItem(myVoteKey,'1');
+      pledgeBtn.textContent='Apoio registrado ✅';
+    });
+
+    resetBtn.addEventListener('click',()=>{
+      localStorage.removeItem(myVoteKey);
+      pledgeBtn.textContent='Quero apoiar';
+    });
+  </script>
+</body>
+</html>
