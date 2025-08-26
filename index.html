@@ -51,8 +51,8 @@
 <body>
   <div class="wrap">
     <div class="brand">
-  <div class="logo">🟢</div>
-  <h1>Transplante Renal — São José dos Campos</h1>
+      <div class="logo">🟢</div>
+      <h1>Transplante Renal — São José dos Campos</h1>
     </div>
 
     <nav>
@@ -135,7 +135,6 @@
         <div>👥 Pessoas que apoiam a doação de órgãos:</div>
         <div class="count" id="pledgeCount">0</div>
         <button id="pledgeBtn">Quero apoiar</button>
-        <button id="resetPledgeBtn">Limpar meu voto</button>
       </div>
     </section>
   </div>
@@ -155,7 +154,6 @@
     const myVoteKey  = 'pledgeVoted_v1';
     const pledgeCountEl = document.getElementById('pledgeCount');
     const pledgeBtn = document.getElementById('pledgeBtn');
-    const resetBtn = document.getElementById('resetPledgeBtn');
 
     const getCount = () => parseInt(localStorage.getItem(pledgeKey) || '0', 10);
     const setCount = (n) => { localStorage.setItem(pledgeKey, String(n)); pledgeCountEl.textContent = n; };
@@ -172,15 +170,6 @@
       localStorage.setItem(myVoteKey, '1');
       pledgeBtn.textContent = 'Apoio registrado ✅';
     });
-
-    resetBtn.addEventListener('click', () => {
-      localStorage.removeItem(myVoteKey);
-      localStorage.setItem(pledgeKey, '0');
-      pledgeCountEl.textContent = '0';
-      pledgeBtn.textContent = 'Quero apoiar';
-    });
   </script>
 </body>
-  </html>
-
-
+</html>
