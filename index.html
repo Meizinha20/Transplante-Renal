@@ -12,7 +12,12 @@
     nav button { background:#1e293b; border:none; padding:8px 16px; border-radius:20px; color:#fff; cursor:pointer; }
     nav button:hover { background:#334155; }
     .brand { display:flex; align-items:center; gap:8px; }
-    .brand .logo { width:40px; height:40px; border-radius:50%; background:#2563eb; display:flex; align-items:center; justify-content:center; }
+    .brand .logo { 
+      width:40px; 
+      height:40px; 
+      border-radius:50%; 
+      object-fit:cover; 
+    }
     .brand h1 { font-size:18px; margin:0; }
     .hero { text-align:center; padding:40px 0; }
     .hero h2 { font-size:28px; margin:0; }
@@ -51,7 +56,10 @@
 <body>
   <div class="wrap">
     <div class="brand">
-      <div class="logo">🟢</div>
+      <!-- Logo novo vindo do GitHub -->
+      <img src="https://raw.githubusercontent.com/Meizinha20/Transplante-Renal/refs/heads/main/file_00000000f1e4622f8966d072f1f1736d.png" 
+           alt="Logo Transplante Renal" 
+           class="logo">
       <h1>Transplante Renal — São José dos Campos</h1>
     </div>
 
@@ -140,7 +148,7 @@
   </div>
 
   <footer>
-    Devs- Eliana, Gustavo, Icaro, Isabelli e suzana — Curso Técnico de Enfermagem<br>
+    Devs- Eliana, Gustavo, Icaro, Isabelli e Suzana — Curso Técnico de Enfermagem<br>
     São José dos Campos — 2025
   </footer>
 
@@ -173,6 +181,3 @@
   </script>
 </body>
 </html>
-
-
-
