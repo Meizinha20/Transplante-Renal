@@ -4,191 +4,146 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Transplante Renal</title>
-  <meta name="description" content="Site interativo e educativo sobre transplante renal em São José dos Campos: conceito, indicações, fila, compatibilidade, mitos e verdades, fluxo local e quiz." />
+  <meta name="description" content="Informações acessíveis sobre transplante renal: processo, cuidados, tempo de transporte e apoio.">
   <style>
-    body { margin:0; font-family:sans-serif; background:#0b1120; color:#fff; }
-    .wrap { max-width:900px; margin:auto; padding:0 20px; }
-    nav { display:flex; flex-wrap:wrap; gap:8px; padding:20px 0; }
-    nav button { background:#1e293b; border:none; padding:8px 16px; border-radius:20px; color:#fff; cursor:pointer; }
-    nav button:hover { background:#334155; }
-    .brand { display:flex; align-items:center; gap:8px; }
-    .brand img { width:40px; height:40px; border-radius:50%; }
-    .brand h1 { font-size:18px; margin:0; }
-    .hero { text-align:center; padding:40px 0; }
-    .hero h2 { font-size:28px; margin:0; }
-    .section { margin:40px 0; }
-    .section h3 { font-size:22px; margin-bottom:12px; }
-    .grid { display:grid; gap:16px; }
-    .grid.cols-2 { grid-template-columns:repeat(2,1fr); }
-    .grid.cols-3 { grid-template-columns:repeat(3,1fr); }
-    .card { background:#1e293b; padding:16px; border-radius:12px; }
-    .myths { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-    .myth { background:#1e293b; padding:16px; border-radius:12px; }
-    .pledge { background:#1e293b; padding:20px; border-radius:12px; display:flex; flex-direction:column; align-items:center; gap:12px; }
-    .pledge button { padding:10px 20px; border-radius:20px; border:none; cursor:pointer; }
-    .pledge .count { font-size:24px; font-weight:bold; }
-    footer { background:#111827; text-align:center; padding:20px 0; font-size:14px; }
-
-    @media (max-width: 900px) {
-      .wrap { padding:0 14px; }
-      .brand h1 { font-size:16px; }
-      .hero { padding:22px 0; }
-      .hero h2 { font-size:20px; line-height:1.15; }
-      nav { display:grid; grid-template-columns: repeat(2,1fr); gap:10px; padding:10px 0; }
-      nav button { width:100%; padding:10px; font-size:15px; text-align:center; }
-      .grid.cols-2, .grid.cols-3, .myths { grid-template-columns:1fr !important; }
-      .card { padding:12px; }
-      footer { padding:18px 0 40px; text-align:center; font-size:12px; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f8fff8;
+      color: #333;
+      line-height: 1.6;
     }
-    @media (max-width: 480px) {
-      nav { grid-template-columns:1fr; }
-      .hero h2 { font-size:18px; }
-      .brand img { width:36px; height:36px; }
+    header {
+      background: #2e7d32;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    section {
+      padding: 1.5rem;
+      max-width: 900px;
+      margin: auto;
+    }
+    h2 {
+      color: #2e7d32;
+    }
+    .btn {
+      display: inline-block;
+      background: #388e3c;
+      color: white;
+      padding: 0.7rem 1.2rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-top: 10px;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background: #1b5e20;
+    }
+    .count {
+      margin-top: 8px;
+      font-weight: bold;
+      color: #2e7d32;
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="brand">
-      <img src="https://raw.githubusercontent.com/Meizinha20/Transplante-Renal/refs/heads/main/file_00000000f1e4622f8966d072f1f1736d.png" alt="Logo Transplante Renal">
-      <h1>Transplante Renal — São José dos Campos</h1>
-    </div>
+  <header>
+    <h1>Transplante Renal</h1>
+    <p>Informações essenciais para todos — leigos e profissionais da saúde</p>
+  </header>
 
-    <nav>
-      <button onclick="scrollToId('inicio')">Início</button>
-      <button onclick="scrollToId('conceito')">Conceito</button>
-      <button onclick="scrollToId('indicacoes')">Indicações</button>
-      <button onclick="scrollToId('fila')">Fila & Compatibilidade</button>
-      <button onclick="scrollToId('passo')">Passo a passo</button>
-      <button onclick="scrollToId('mitos')">Mitos & Verdades</button>
-      <button onclick="scrollToId('sjc')">SJC & Logística</button>
-      <button onclick="scrollToId('quiz')">Quiz</button>
-      <button onclick="scrollToId('apoio')">Apoio à doação</button>
-    </nav>
+  <section>
+    <h2>O que é o Transplante Renal?</h2>
+    <p>É um procedimento cirúrgico em que um rim saudável, de um doador vivo ou falecido, é implantado em um paciente com insuficiência renal crônica. O objetivo é substituir a função dos rins doentes.</p>
+  </section>
 
-    <section id="inicio" class="hero">
-      <p><strong>FEIRA EDUCATIVA — CURSO TÉCNICO DE ENFERMAGEM</strong></p>
-      <h2>Como o transplante de rim salva vidas — de forma clara e sem mitos</h2>
-    </section>
+  <section>
+    <h2>Tempo de Transporte do Órgão</h2>
+    <p>O rim pode ser preservado fora do corpo humano por até <strong>24 a 36 horas</strong>, desde que armazenado adequadamente em solução de preservação e gelo. Quanto menor o tempo entre a retirada e o implante, maiores as chances de sucesso do transplante.</p>
+  </section>
 
-    <section id="conceito" class="section">
-      <h3>Conceito</h3>
-      <div class="card">O transplante renal é a substituição de um rim doente por um rim saudável, devolvendo qualidade de vida e autonomia ao paciente com doença renal crônica.</div>
-    </section>
+  <section>
+    <h2>Processo de Doação</h2>
+    <ul>
+      <li><strong>Doador vivo:</strong> geralmente parentes próximos, pode doar um rim sem prejudicar a saúde.</li>
+      <li><strong>Doador falecido:</strong> ocorre após morte encefálica confirmada e autorização da família.</li>
+    </ul>
+  </section>
 
-    <section id="indicacoes" class="section">
-      <h3>Indicações</h3>
-      <div class="grid cols-2">
-        <div class="card">Pacientes em diálise (hemodiálise ou diálise peritoneal).</div>
-        <div class="card">Doença renal crônica estágio terminal.</div>
-        <div class="card">Complicações da diálise que reduzem qualidade de vida.</div>
-        <div class="card">Acompanhamento médico confirma a necessidade do transplante.</div>
-      </div>
-    </section>
+  <section>
+    <h2>Compatibilidade</h2>
+    <p>O sucesso depende da compatibilidade de fatores como:</p>
+    <ul>
+      <li>Tipo sanguíneo</li>
+      <li>Compatibilidade genética (HLA)</li>
+      <li>Teste cruzado (crossmatch) para evitar rejeição</li>
+    </ul>
+  </section>
 
-    <section id="fila" class="section">
-      <h3>Fila & Compatibilidade</h3>
-      <div class="card">A fila é única e regulada pelo Sistema Nacional de Transplantes. O critério principal é compatibilidade sanguínea, imunológica e tempo de espera.</div>
-    </section>
+  <section>
+    <h2>Cuidados de Enfermagem</h2>
+    <ul>
+      <li>Monitorar sinais vitais e função renal no pós-operatório.</li>
+      <li>Administrar imunossupressores corretamente.</li>
+      <li>Orientar sobre higiene, alimentação e uso de medicamentos.</li>
+      <li>Acompanhar adesão ao tratamento para evitar rejeição.</li>
+    </ul>
+  </section>
 
-    <section id="passo" class="section">
-      <h3>Passo a passo</h3>
-      <div class="grid cols-3">
-        <div class="card">1. Encaminhamento para avaliação em centro transplantador.</div>
-        <div class="card">2. Exames clínicos e laboratoriais detalhados.</div>
-        <div class="card">3. Entrada oficial na lista de espera.</div>
-        <div class="card">4. Notificação quando há doador compatível.</div>
-        <div class="card">5. Cirurgia do transplante.</div>
-        <div class="card">6. Acompanhamento contínuo pós-transplante.</div>
-      </div>
-    </section>
+  <section>
+    <h2>Curiosidades</h2>
+    <ul>
+      <li>O primeiro transplante renal bem-sucedido ocorreu em 1954, entre irmãos gêmeos.</li>
+      <li>O Brasil possui um dos maiores programas públicos de transplante do mundo.</li>
+      <li>Um rim saudável pode realizar até <strong>1 milhão de filtrações por minuto</strong>.</li>
+    </ul>
+  </section>
 
-    <section id="mitos" class="section">
-      <h3>Mitos & Verdades</h3>
-      <div class="myths">
-        <div class="myth"><strong>Mito:</strong> A doação desfigura o corpo.<br><strong>Verdade:</strong> A retirada é feita com cuidado e respeito, permitindo velório aberto.</div>
-        <div class="myth"><strong>Mito:</strong> A família não pode doar.<br><strong>Verdade:</strong> Doadores vivos aparentados podem doar com autorização judicial em alguns casos.</div>
-        <div class="myth"><strong>Mito:</strong> A religião não permite.<br><strong>Verdade:</strong> Todas as grandes religiões apoiam a doação como ato de amor.</div>
-        <div class="myth"><strong>Mito:</strong> Pessoas idosas não podem doar.<br><strong>Verdade:</strong> Idade não é o único critério, e sim a saúde do órgão.</div>
-      </div>
-    </section>
+  <section>
+    <h2>Quero Apoiar</h2>
+    <button id="apoiarBtn" class="btn">Quero Apoiar</button>
+    <div id="contador" class="count">Apoiadores: 0</div>
+  </section>
 
-    <section id="sjc" class="section">
-      <h3>SJC & Logística</h3>
-      <div class="card">Em São José dos Campos, o fluxo envolve hospitais locais, a Central de Transplantes do Estado e equipes especializadas. O transporte rápido e a comunicação eficiente são fundamentais para o sucesso.</div>
-    </section>
-
-    <section id="quiz" class="section">
-      <h3>Quiz Rápido</h3>
-      <div class="card">
-        <p><strong>Pergunta:</strong> Qual órgão é substituído no transplante renal?</p>
-        <button onclick="alert('Correto! O rim é o órgão transplantado.')">Rim</button>
-        <button onclick="alert('Não! O coração não é o foco aqui.')">Coração</button>
-        <button onclick="alert('Não! O fígado não é o foco aqui.')">Fígado</button>
-      </div>
-    </section>
-
-    <section id="apoio" class="section">
-      <h3>Apoio à doação</h3>
-      <div class="pledge">
-        <div>👥 Pessoas que apoiam a doação de órgãos:</div>
-        <div class="count" id="apoios">0</div>
-        <button id="apoiarBtn">Quero apoiar</button>
-      </div>
-    </section>
-  </div>
-
-  <footer>
-    Devs- Eliana, Gustavo, Icaro, Isabelli e Suzana — Curso Técnico de Enfermagem<br>
-    São José dos Campos — 2025
-  </footer>
-
-  <script>
-    function scrollToId(id) {
-      document.getElementById(id).scrollIntoView({behavior:"smooth"});
-    }
-  </script>
-
-  <!-- Firebase -->
+  <!-- Firebase SDK -->
   <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getDatabase, ref, get, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, doc, getDoc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyBdtnzQob-don9p2iOlUtoLcPD7GU2hcD0",
-    authDomain: "transplante-renal-six.firebaseapp.com",
-    databaseURL: "https://transplante-renal-six-default-rtdb.firebaseio.com",
-    projectId: "transplante-renal-six",
-    storageBucket: "transplante-renal-six.firebasestorage.app",
-    messagingSenderId: "124301750618",
-    appId: "1:124301750618:web:4392c7985ab53bf6a44363",
-    measurementId: "G-92BB88TCVS"
-  };
+    const firebaseConfig = {
+      apiKey: "SUA_API_KEY",
+      authDomain: "SEU_PROJECT_ID.firebaseapp.com",
+      projectId: "SEU_PROJECT_ID",
+      storageBucket: "SEU_PROJECT_ID.appspot.com",
+      messagingSenderId: "SEU_SENDER_ID",
+      appId: "SEU_APP_ID"
+    };
 
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-  const apoioRef = ref(db, 'apoios');
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const apoioRef = doc(db, "apoios", "contador");
 
-  async function carregarApoios() {
-    const snapshot = await get(apoioRef);
-    if (snapshot.exists()) {
-      document.getElementById("apoios").innerText = snapshot.val();
-    } else {
-      apoioRef.set(0);
-      document.getElementById("apoios").innerText = 0;
+    async function carregarContador() {
+      const snap = await getDoc(apoioRef);
+      if (snap.exists()) {
+        document.getElementById("contador").innerText = "Apoiadores: " + snap.data().total;
+      } else {
+        await setDoc(apoioRef, { total: 0 });
+        document.getElementById("contador").innerText = "Apoiadores: 0";
+      }
     }
-  }
 
-  document.getElementById("apoiarBtn").addEventListener("click", async () => {
-    await runTransaction(apoioRef, (current) => {
-      return (current || 0) + 1;
-    });
-    carregarApoios();
-    document.getElementById("apoiarBtn").textContent = "Apoio registrado ✅";
-  });
+    async function adicionarApoio() {
+      await updateDoc(apoioRef, { total: increment(1) });
+      carregarContador();
+    }
 
-  carregarApoios();
+    document.getElementById("apoiarBtn").addEventListener("click", adicionarApoio);
+    carregarContador();
   </script>
-
 </body>
 </html>
