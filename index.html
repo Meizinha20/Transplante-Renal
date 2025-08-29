@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Transplante Renal - Informativo</title>
   <meta name="description" content="Informativo sobre transplante renal, doação de órgãos, cuidados e apoio à doação.">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -17,30 +18,35 @@
     }
     header { background:#2e7d32; color:#fff; padding:1rem; text-align:center; }
     section { max-width:900px; margin:20px auto; padding:15px; background:#fff; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
-    h2 { color:#2e7d32; }
+    h2 { color:#2e7d32; display:flex; align-items:center; }
+    h2 i { margin-right:10px; color:#388e3c; }
     ul { padding-left: 20px; }
-    a { color:#2e7d32; }
+    a { color:#2e7d32; text-decoration:none; }
+    a:hover { text-decoration:underline; }
     .btn { display:inline-block; background:#388e3c; color:#fff; padding:0.7rem 1.2rem; border-radius:8px; border:none; cursor:pointer; margin-top:10px; font-size:1rem; transition:0.3s; }
     .btn:hover { background:#1b5e20; }
     .count { margin-top:8px; font-weight:bold; color:#2e7d32; }
     video { width:100%; max-width:560px; height:auto; margin-top:10px; border-radius:8px; }
+    iframe.map { width:100%; height:300px; border:0; margin-top:10px; border-radius:8px; }
+    .hospital-link { display:flex; align-items:center; margin-bottom:5px; }
+    .hospital-link i { margin-right:8px; color:#2e7d32; }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>Transplante Renal</h1>
+  <h1><i class="fas fa-kidneys"></i> Transplante Renal</h1>
   <p>Informações completas sobre doação de órgãos e transplante renal</p>
 </header>
 
 <section>
-  <h2>1. Introdução</h2>
+  <h2><i class="fas fa-info-circle"></i> 1. Introdução</h2>
   <p><strong>O que é o transplante renal:</strong> Substituição de um rim doente por um rim saudável, devolvendo qualidade de vida.</p>
   <p><strong>Importância da doação de órgãos:</strong> Salva vidas, reduz sofrimento e melhora a saúde de quem depende da diálise.</p>
 </section>
 
 <section>
-  <h2>2. A Situação Atual</h2>
+  <h2><i class="fas fa-chart-bar"></i> 2. A Situação Atual</h2>
   <ul>
     <li>Número de pacientes na fila de espera: milhares em todo o Brasil.</li>
     <li>Estatísticas de doadores vs receptores: há mais receptores que doadores, gerando listas de espera longas.</li>
@@ -49,7 +55,7 @@
 </section>
 
 <section>
-  <h2>3. Quem Pode Doar</h2>
+  <h2><i class="fas fa-user-friends"></i> 3. Quem Pode Doar</h2>
   <ul>
     <li>Doador vivo: familiar ou amigo próximo.</li>
     <li>Doador falecido: após confirmação de morte encefálica e autorização familiar.</li>
@@ -58,14 +64,14 @@
 </section>
 
 <section>
-  <h2>4. Benefícios do Transplante</h2>
+  <h2><i class="fas fa-heartbeat"></i> 4. Benefícios do Transplante</h2>
   <ul>
     <li>Melhora significativa da qualidade de vida.</li>
     <li>Maior expectativa de vida comparado à diálise.</li>
     <li>Possibilidade de retorno às atividades diárias e profissionais.</li>
   </ul>
 
-  <h3>Vídeo Educativo sobre Transplante Renal</h3>
+  <h3><i class="fas fa-video"></i> Vídeo Educativo sobre Transplante Renal</h3>
   <p>Assista ao vídeo abaixo para entender melhor o processo de transplante renal:</p>
   <video controls>
     <source src="https://raw.githubusercontent.com/Meizinha20/Transplante-Renal/main/Transplante%20Renal.mp4" type="video/mp4">
@@ -74,7 +80,7 @@
 </section>
 
 <section>
-  <h2>5. Mitos e Verdades sobre Doação</h2>
+  <h2><i class="fas fa-question-circle"></i> 5. Mitos e Verdades sobre Doação</h2>
   <ul>
     <li>Segurança para o doador vivo: cirurgia segura, acompanhamento médico contínuo.</li>
     <li>Aspectos éticos e legais: regulamentado por órgãos oficiais, consentimento obrigatório.</li>
@@ -83,17 +89,15 @@
 </section>
 
 <section>
-  <h2>6. Como Se Tornar um Doador</h2>
+  <h2><i class="fas fa-hand-holding-heart"></i> 6. Como Se Tornar um Doador</h2>
   <ul>
     <li>Cadastro em órgãos oficiais: <a href="https://www.gov.br/saude/pt-br/assuntos/doacao-de-orgao" target="_blank">Transplante.gov.br</a>.</li>
     <li>Consentimento familiar é necessário em todos os casos.</li>
     <li>Passo a passo do processo em SJC: avaliação médica → compatibilidade → autorização familiar → cirurgia nos hospitais de referência → acompanhamento pós-operatório.</li>
     <li>Hospitais de referência em São José dos Campos:
-      <ul>
-        <li>Santa Casa de São José dos Campos</li>
-        <li>Hospital Municipal Dr. José de Carvalho Florence</li>
-        <li>Hospital Regional de São José dos Campos</li>
-      </ul>
+      <div class="hospital-link"><i class="fas fa-hospital"></i> <a href="https://www.santacasasjc.org.br/" target="_blank">Santa Casa de São José dos Campos</a></div>
+      <div class="hospital-link"><i class="fas fa-hospital"></i> <a href="https://www.hsjc.sp.gov.br/" target="_blank">Hospital Municipal Dr. José de Carvalho Florence</a></div>
+      <div class="hospital-link"><i class="fas fa-hospital"></i> <a href="https://www.hrsjc.sp.gov.br/" target="_blank">Hospital Regional de São José dos Campos</a></div>
     </li>
     <li>Acionamento da doação:
       <ul>
@@ -106,7 +110,7 @@
 </section>
 
 <section>
-  <h2>7. Impacto Social e Emocional</h2>
+  <h2><i class="fas fa-users"></i> 7. Impacto Social e Emocional</h2>
   <ul>
     <li>Histórias reais de receptores e doadores mostram transformação de vidas.</li>
     <li>Doação promove solidariedade, esperança e apoio à comunidade.</li>
@@ -114,7 +118,7 @@
 </section>
 
 <section>
-  <h2>8. Cuidados e Acompanhamento</h2>
+  <h2><i class="fas fa-stethoscope"></i> 8. Cuidados e Acompanhamento</h2>
   <ul>
     <li><strong>Para o receptor:</strong> imunossupressores, monitoramento contínuo, exames regulares e cuidados com infecção.</li>
     <li><strong>Para o doador:</strong> recuperação cirúrgica, acompanhamento da função renal e estilo de vida saudável.</li>
@@ -122,7 +126,7 @@
 </section>
 
 <section>
-  <h2>Informações Técnicas do Transplante</h2>
+  <h2><i class="fas fa-cogs"></i> Informações Técnicas do Transplante</h2>
   <ul>
     <li><strong>Compatibilidade:</strong> tipo sanguíneo, antígenos HLA, teste cruzado (crossmatch).</li>
     <li><strong>Fila de espera:</strong> número de receptores ativos, prioridade por tempo de espera e urgência.</li>
@@ -133,7 +137,13 @@
 </section>
 
 <section>
-  <h2>9. Chamada à Ação</h2>
+  <h2><i class="fas fa-map-marker-alt"></i> Rede de Transplantes - SJC</h2>
+  <p>Visualize a localização dos hospitais de referência para transplantes na cidade:</p>
+  <iframe class="map" src="https://www.google.com/maps/d/embed?mid=1NnU1f1e6kJrLkM4ZxG-tlJZ3XwB_1hFJ&ehbc=2E312F" allowfullscreen></iframe>
+</section>
+
+<section>
+  <h2><i class="fas fa-hand-holding-heart"></i> 9. Chamada à Ação</h2>
   <p>Se você deseja ajudar, considere se tornar um doador e incentive familiares e amigos a fazerem o mesmo.</p>
   <button id="apoiarBtn" class="btn">Quero apoiar</button>
   <div id="contador" class="count">Apoiadores: 0</div>
