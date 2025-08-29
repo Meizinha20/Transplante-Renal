@@ -27,7 +27,6 @@
     .btn:hover { background:#1b5e20; }
     .count { margin-top:8px; font-weight:bold; color:#2e7d32; }
     video { width:100%; max-width:560px; height:auto; margin-top:10px; border-radius:8px; }
-    #map { width:100%; height:400px; margin-top:10px; border-radius:8px; }
     .hospital-link { display:flex; align-items:center; margin-bottom:5px; }
     .hospital-link i { margin-right:8px; color:#2e7d32; }
   </style>
@@ -145,12 +144,6 @@
 </section>
 
 <section>
-  <h2><i class="fas fa-map-marker-alt"></i> 10. Rede de Transplantes - SJC</h2>
-  <p>Visualize a localização dos hospitais de referência para transplantes na cidade:</p>
-  <div id="map"></div>
-</section>
-
-<section>
   <h2><i class="fas fa-hand-holding-heart"></i> 11. Chamada à Ação</h2>
   <p>Se você deseja ajudar, considere se tornar um doador e incentive familiares e amigos a fazerem o mesmo.</p>
   <button id="apoiarBtn" class="btn">Quero apoiar</button>
@@ -195,37 +188,5 @@ document.getElementById("apoiarBtn").addEventListener("click", adicionarApoio);
 carregarContador();
 </script>
 
-<!-- Google Maps -->
-<script>
-  function initMap() {
-    const sjc = { lat: -23.1896, lng: -45.9009 };
-
-    const map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 12,
-      center: sjc,
-    });
-
-    const hospitals = [
-      { name: "Santa Casa de São José dos Campos", position: { lat: -23.1827, lng: -45.8814 }, url: "https://www.santacasasjc.org.br/" },
-      { name: "Hospital Municipal Dr. José de Carvalho Florence", position: { lat: -23.1900, lng: -45.9030 }, url: "https://www.hsjc.sp.gov.br/" },
-      { name: "Hospital Regional de São José dos Campos", position: { lat: -23.1940, lng: -45.9020 }, url: "https://www.hrsjc.sp.gov.br/" }
-    ];
-
-    hospitals.forEach(hospital => {
-      const marker = new google.maps.Marker({
-        position: hospital.position,
-        map: map,
-        title: hospital.name
-      });
-      const infoWindow = new google.maps.InfoWindow({
-        content: `<strong>${hospital.name}</strong><br><a href="${hospital.url}" target="_blank">${hospital.url}</a>`
-      });
-      marker.addListener("click", () => { infoWindow.open(map, marker); });
-    });
-  }
-</script>
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
-
 </body>
 </html>
-
