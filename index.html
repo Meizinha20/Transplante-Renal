@@ -29,7 +29,6 @@
     .pledge .count { font-size:24px; font-weight:bold; }
     footer { background:#111827; text-align:center; padding:20px 0; font-size:14px; }
 
-    /* ===== Responsividade ===== */
     @media (max-width: 900px) {
       .wrap { padding:0 14px; }
       .brand h1 { font-size:16px; }
@@ -150,43 +149,46 @@
     }
   </script>
 
-  <!-- Firebase + Firestore -->
+  <!-- Firebase -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, doc, getDoc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getDatabase, ref, get, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyBdtnzQob-don9p2iOlUtoLcPD7GU2hcD0",
-      authDomain: "transplante-renal-six.firebaseapp.com",
-      databaseURL: "https://transplante-renal-six-default-rtdb.firebaseio.com",
-      projectId: "transplante-renal-six",
-      storageBucket: "transplante-renal-six.firebasestorage.app",
-      messagingSenderId: "124301750618",
-      appId: "1:124301750618:web:4392c7985ab53bf6a44363",
-      measurementId: "G-92BB88TCVS"
-    };
+  const firebaseConfig = {
+    apiKey: "AIzaSyBdtnzQob-don9p2iOlUtoLcPD7GU2hcD0",
+    authDomain: "transplante-renal-six.firebaseapp.com",
+    databaseURL: "https://transplante-renal-six-default-rtdb.firebaseio.com",
+    projectId: "transplante-renal-six",
+    storageBucket: "transplante-renal-six.firebasestorage.app",
+    messagingSenderId: "124301750618",
+    appId: "1:124301750618:web:4392c7985ab53bf6a44363",
+    measurementId: "G-92BB88TCVS"
+  };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  const apoioRef = ref(db, 'apoios');
 
-    const apoioRef = doc(db, "votacao", "apoios");
-
-    async function carregarApoios() {
-      const snap = await getDoc(apoioRef);
-      if (snap.exists()) {
-        document.getElementById("apoios").innerText = snap.data().total;
-      } else {
-        await setDoc(apoioRef, { total: 0 });
-      }
+  async function carregarApoios() {
+    const snapshot = await get(apoioRef);
+    if (snapshot.exists()) {
+      document.getElementById("apoios").innerText = snapshot.val();
+    } else {
+      apoioRef.set(0);
+      document.getElementById("apoios").innerText = 0;
     }
+  }
 
-    document.getElementById("apoiarBtn").addEventListener("click", async () => {
-      await updateDoc(apoioRef, { total: increment(1) });
-      carregarApoios();
-      document.getElementById("apoiarBtn").textContent = "Apoio registrado ✅";
+  document.getElementById("apoiarBtn").addEventListener("click", async () => {
+    await runTransaction(apoioRef, (current) => {
+      return (current || 0) + 1;
     });
-
     carregarApoios();
+    document.getElementById("apoiarBtn").textContent = "Apoio registrado ✅";
+  });
+
+  carregarApoios();
   </script>
+
 </body>
 </html>
