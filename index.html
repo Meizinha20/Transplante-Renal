@@ -120,4 +120,85 @@
 <section>
   <h2><i class="fas fa-users"></i> 7. Impacto Social e Emocional</h2>
   <ul>
-    <li>Histórias reais de receptores e doadores mostram tran
+    <li>Histórias reais de receptores e doadores mostram transformação de vidas.</li>
+    <li>Doação promove solidariedade, esperança e apoio à comunidade.</li>
+  </ul>
+</section>
+
+<section>
+  <h2><i class="fas fa-stethoscope"></i> 8. Cuidados e Acompanhamento</h2>
+  <ul>
+    <li><strong>Para o receptor:</strong> imunossupressores, monitoramento contínuo, exames regulares e cuidados com infecção.</li>
+    <li><strong>Para o doador:</strong> recuperação cirúrgica, acompanhamento da função renal e estilo de vida saudável.</li>
+  </ul>
+</section>
+
+<section>
+  <h2><i class="fas fa-cogs"></i> Informações Técnicas do Transplante</h2>
+  <ul>
+    <li><strong>Compatibilidade:</strong> tipo sanguíneo, antígenos HLA, teste cruzado (crossmatch).</li>
+    <li><strong>Fila de espera:</strong> número de receptores ativos, prioridade por tempo de espera e urgência.</li>
+    <li><strong>Tempo de isquemia:</strong> isquemia fria: 24-36h, isquemia quente: minutos durante cirurgia.</li>
+    <li><strong>Transporte do rim:</strong> solução de preservação, caixa térmica refrigerada, transporte rápido e coordenado.</li>
+    <li><strong>Indicações:</strong> insuficiência renal crônica terminal, falha de diálise ou complicações graves.</li>
+  </ul>
+</section>
+
+<section>
+  <h2><i class="fas fa-map-marker-alt"></i> 9. Rede de Transplantes - SJC</h2>
+  <p>Visualize a localização dos hospitais de referência para transplantes na cidade:</p>
+  <iframe class="map"
+    src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d14608.123456789!2d-45.87654321!3d-23.18976543!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce5f123456789%3A0xabcdef123456789!2sSanta%20Casa%20de%20S%C3%A3o%20Jos%C3%A9%20dos%20Campos!5e0!3m2!1spt-BR!2sbr!4v1693222222222!5m2!1spt-BR!2sbr"
+    allowfullscreen>
+  </iframe>
+</section>
+
+<section>
+  <h2><i class="fas fa-hand-holding-heart"></i> 10. Chamada à Ação</h2>
+  <p>Se você deseja ajudar, considere se tornar um doador e incentive familiares e amigos a fazerem o mesmo.</p>
+  <button id="apoiarBtn" class="btn">Quero apoiar</button>
+  <div id="contador" class="count">Apoiadores: 0</div>
+</section>
+
+<!-- Firebase -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, doc, getDoc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "SUA_API_KEY",
+  authDomain: "SEU_PROJECT_ID.firebaseapp.com",
+  projectId: "SEU_PROJECT_ID",
+  storageBucket: "SEU_PROJECT_ID.appspot.com",
+  messagingSenderId: "SEU_SENDER_ID",
+  appId: "SEU_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const apoioRef = doc(db, "apoios", "contador");
+
+// Carregar contador inicial
+async function carregarContador() {
+  const snap = await getDoc(apoioRef);
+  if (snap.exists()) {
+    document.getElementById("contador").innerText = "Apoiadores: " + snap.data().total;
+  } else {
+    await setDoc(apoioRef, { total: 0 });
+    document.getElementById("contador").innerText = "Apoiadores: 0";
+  }
+}
+
+// Adicionar apoio
+async function adicionarApoio() {
+  await updateDoc(apoioRef, { total: increment(1) });
+  carregarContador();
+  document.getElementById("apoiarBtn").textContent = "Apoio registrado ✅";
+}
+
+document.getElementById("apoiarBtn").addEventListener("click", adicionarApoio);
+carregarContador();
+</script>
+
+</body>
+</html>
