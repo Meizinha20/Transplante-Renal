@@ -20,7 +20,7 @@
     section { max-width:900px; margin:20px auto; padding:15px; background:#fff; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
     h2 { color:#2e7d32; display:flex; align-items:center; }
     h2 i { margin-right:10px; color:#388e3c; }
-    ul { padding-left: 20px; }
+    ul, ol { padding-left: 20px; }
     a { color:#2e7d32; text-decoration:none; }
     a:hover { text-decoration:underline; }
     .btn { display:inline-block; background:#388e3c; color:#fff; padding:0.7rem 1.2rem; border-radius:8px; border:none; cursor:pointer; margin-top:10px; font-size:1rem; transition:0.3s; }
@@ -93,13 +93,21 @@
   <ul>
     <li>Cadastro em órgãos oficiais: <a href="https://www.gov.br/saude/pt-br/assuntos/doacao-de-orgao" target="_blank">Transplante.gov.br</a>.</li>
     <li>Consentimento familiar é necessário em todos os casos.</li>
-    <li>Passo a passo do processo em SJC: avaliação médica → compatibilidade → autorização familiar → cirurgia nos hospitais de referência → acompanhamento pós-operatório.</li>
-    <li>Hospitais de referência em São José dos Campos:
+    <li><strong>Passo a passo do processo em SJC:</strong>
+      <ol>
+        <li>Avaliação médica inicial</li>
+        <li>Verificação de compatibilidade (sangue e HLA)</li>
+        <li>Autorização familiar</li>
+        <li>Cirurgia nos hospitais de referência</li>
+        <li>Acompanhamento pós-operatório</li>
+      </ol>
+    </li>
+    <li><strong>Hospitais de referência em São José dos Campos:</strong>
       <div class="hospital-link"><i class="fas fa-hospital"></i> <a href="https://www.santacasasjc.org.br/" target="_blank">Santa Casa de São José dos Campos</a></div>
       <div class="hospital-link"><i class="fas fa-hospital"></i> <a href="https://www.hsjc.sp.gov.br/" target="_blank">Hospital Municipal Dr. José de Carvalho Florence</a></div>
       <div class="hospital-link"><i class="fas fa-hospital"></i> <a href="https://www.hrsjc.sp.gov.br/" target="_blank">Hospital Regional de São José dos Campos</a></div>
     </li>
-    <li>Acionamento da doação:
+    <li><strong>Acionamento da doação:</strong>
       <ul>
         <li>Quando há doador vivo: coordenação direta com hospital de referência e equipe médica.</li>
         <li>Quando há doador falecido: equipe hospitalar aciona o Sistema Nacional de Transplantes (SNT) e familiares.</li>
@@ -112,82 +120,4 @@
 <section>
   <h2><i class="fas fa-users"></i> 7. Impacto Social e Emocional</h2>
   <ul>
-    <li>Histórias reais de receptores e doadores mostram transformação de vidas.</li>
-    <li>Doação promove solidariedade, esperança e apoio à comunidade.</li>
-  </ul>
-</section>
-
-<section>
-  <h2><i class="fas fa-stethoscope"></i> 8. Cuidados e Acompanhamento</h2>
-  <ul>
-    <li><strong>Para o receptor:</strong> imunossupressores, monitoramento contínuo, exames regulares e cuidados com infecção.</li>
-    <li><strong>Para o doador:</strong> recuperação cirúrgica, acompanhamento da função renal e estilo de vida saudável.</li>
-  </ul>
-</section>
-
-<section>
-  <h2><i class="fas fa-cogs"></i> Informações Técnicas do Transplante</h2>
-  <ul>
-    <li><strong>Compatibilidade:</strong> tipo sanguíneo, antígenos HLA, teste cruzado (crossmatch).</li>
-    <li><strong>Fila de espera:</strong> número de receptores ativos, prioridade por tempo de espera e urgência.</li>
-    <li><strong>Tempo de isquemia:</strong> isquemia fria: 24-36h, isquemia quente: minutos durante cirurgia.</li>
-    <li><strong>Transporte do rim:</strong> solução de preservação, caixa térmica refrigerada, transporte rápido e coordenado.</li>
-    <li><strong>Indicações:</strong> insuficiência renal crônica terminal, falha de diálise ou complicações graves.</li>
-  </ul>
-</section>
-
-<section>
-  <h2><i class="fas fa-map-marker-alt"></i> Rede de Transplantes - SJC</h2>
-  <p>Visualize a localização dos hospitais de referência para transplantes na cidade:</p>
-  <iframe class="map" src="https://www.google.com/maps/d/embed?mid=1NnU1f1e6kJrLkM4ZxG-tlJZ3XwB_1hFJ&ehbc=2E312F" allowfullscreen></iframe>
-</section>
-
-<section>
-  <h2><i class="fas fa-hand-holding-heart"></i> 9. Chamada à Ação</h2>
-  <p>Se você deseja ajudar, considere se tornar um doador e incentive familiares e amigos a fazerem o mesmo.</p>
-  <button id="apoiarBtn" class="btn">Quero apoiar</button>
-  <div id="contador" class="count">Apoiadores: 0</div>
-</section>
-
-<!-- Firebase -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, doc, getDoc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "SUA_API_KEY",
-  authDomain: "SEU_PROJECT_ID.firebaseapp.com",
-  projectId: "SEU_PROJECT_ID",
-  storageBucket: "SEU_PROJECT_ID.appspot.com",
-  messagingSenderId: "SEU_SENDER_ID",
-  appId: "SEU_APP_ID"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const apoioRef = doc(db, "apoios", "contador");
-
-// Carregar contador inicial
-async function carregarContador() {
-  const snap = await getDoc(apoioRef);
-  if (snap.exists()) {
-    document.getElementById("contador").innerText = "Apoiadores: " + snap.data().total;
-  } else {
-    await setDoc(apoioRef, { total: 0 });
-    document.getElementById("contador").innerText = "Apoiadores: 0";
-  }
-}
-
-// Adicionar apoio
-async function adicionarApoio() {
-  await updateDoc(apoioRef, { total: increment(1) });
-  carregarContador();
-  document.getElementById("apoiarBtn").textContent = "Apoio registrado ✅";
-}
-
-document.getElementById("apoiarBtn").addEventListener("click", adicionarApoio);
-carregarContador();
-</script>
-
-</body>
-</html>
+    <li>Histórias reais de receptores e doadores mostram tran
