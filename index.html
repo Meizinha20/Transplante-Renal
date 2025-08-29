@@ -12,12 +12,7 @@
     nav button { background:#1e293b; border:none; padding:8px 16px; border-radius:20px; color:#fff; cursor:pointer; }
     nav button:hover { background:#334155; }
     .brand { display:flex; align-items:center; gap:8px; }
-    .brand .logo { 
-      width:40px; 
-      height:40px; 
-      border-radius:50%; 
-      object-fit:cover; 
-    }
+    .brand img { width:40px; height:40px; border-radius:50%; }
     .brand h1 { font-size:18px; margin:0; }
     .hero { text-align:center; padding:40px 0; }
     .hero h2 { font-size:28px; margin:0; }
@@ -49,17 +44,14 @@
     @media (max-width: 480px) {
       nav { grid-template-columns:1fr; }
       .hero h2 { font-size:18px; }
-      .brand .logo { width:36px; height:36px; }
+      .brand img { width:36px; height:36px; }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="brand">
-      <!-- Logo novo vindo do GitHub -->
-      <img src="https://raw.githubusercontent.com/Meizinha20/Transplante-Renal/refs/heads/main/file_00000000f1e4622f8966d072f1f1736d.png" 
-           alt="Logo Transplante Renal" 
-           class="logo">
+      <img src="https://raw.githubusercontent.com/Meizinha20/Transplante-Renal/refs/heads/main/file_00000000f1e4622f8966d072f1f1736d.png" alt="Logo Transplante Renal">
       <h1>Transplante Renal — São José dos Campos</h1>
     </div>
 
@@ -141,8 +133,8 @@
       <h3>Apoio à doação</h3>
       <div class="pledge">
         <div>👥 Pessoas que apoiam a doação de órgãos:</div>
-        <div class="count" id="pledgeCount">0</div>
-        <button id="pledgeBtn">Quero apoiar</button>
+        <div class="count" id="apoios">0</div>
+        <button id="apoiarBtn">Quero apoiar</button>
       </div>
     </section>
   </div>
@@ -156,28 +148,45 @@
     function scrollToId(id) {
       document.getElementById(id).scrollIntoView({behavior:"smooth"});
     }
+  </script>
 
-    // Apoio à doação — contador local
-    const pledgeKey  = 'pledgeCount_v1';
-    const myVoteKey  = 'pledgeVoted_v1';
-    const pledgeCountEl = document.getElementById('pledgeCount');
-    const pledgeBtn = document.getElementById('pledgeBtn');
+  <!-- Firebase + Firestore -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, doc, getDoc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    const getCount = () => parseInt(localStorage.getItem(pledgeKey) || '0', 10);
-    const setCount = (n) => { localStorage.setItem(pledgeKey, String(n)); pledgeCountEl.textContent = n; };
+    const firebaseConfig = {
+      apiKey: "AIzaSyBdtnzQob-don9p2iOlUtoLcPD7GU2hcD0",
+      authDomain: "transplante-renal-six.firebaseapp.com",
+      databaseURL: "https://transplante-renal-six-default-rtdb.firebaseio.com",
+      projectId: "transplante-renal-six",
+      storageBucket: "transplante-renal-six.firebasestorage.app",
+      messagingSenderId: "124301750618",
+      appId: "1:124301750618:web:4392c7985ab53bf6a44363",
+      measurementId: "G-92BB88TCVS"
+    };
 
-    // inicializa visualmente
-    setCount(getCount());
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-    pledgeBtn.addEventListener('click', () => {
-      if (localStorage.getItem(myVoteKey)) {
-        alert('Obrigado! Seu apoio já foi registrado neste dispositivo.');
-        return;
+    const apoioRef = doc(db, "votacao", "apoios");
+
+    async function carregarApoios() {
+      const snap = await getDoc(apoioRef);
+      if (snap.exists()) {
+        document.getElementById("apoios").innerText = snap.data().total;
+      } else {
+        await setDoc(apoioRef, { total: 0 });
       }
-      setCount(getCount() + 1);           
-      localStorage.setItem(myVoteKey, '1');
-      pledgeBtn.textContent = 'Apoio registrado ✅';
+    }
+
+    document.getElementById("apoiarBtn").addEventListener("click", async () => {
+      await updateDoc(apoioRef, { total: increment(1) });
+      carregarApoios();
+      document.getElementById("apoiarBtn").textContent = "Apoio registrado ✅";
     });
+
+    carregarApoios();
   </script>
 </body>
 </html>
