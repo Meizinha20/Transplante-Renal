@@ -7,15 +7,7 @@
   <meta name="description" content="Informativo sobre transplante renal, doação de órgãos, cuidados e apoio à doação.">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin:0;
-      padding:0;
-      color:#333;
-      line-height:1.6;
-      background: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url('https://pbs.twimg.com/media/E6cgDU3XIAE7tEK?format=jpg&name=medium') no-repeat center center fixed;
-      background-size: cover;
-    }
+    body { font-family: Arial, sans-serif; margin:0; padding:0; color:#333; line-height:1.6; background: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url('https://pbs.twimg.com/media/E6cgDU3XIAE7tEK?format=jpg&name=medium') no-repeat center center fixed; background-size: cover; }
     header { background:#2e7d32; color:#fff; padding:1rem; text-align:center; }
     section { max-width:900px; margin:20px auto; padding:15px; background:#fff; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
     h2 { color:#2e7d32; display:flex; align-items:center; }
@@ -73,7 +65,6 @@
     <li>Maior expectativa de vida comparado à diálise.</li>
     <li>Possibilidade de retorno às atividades diárias e profissionais.</li>
   </ul>
-
   <h3><i class="fas fa-video"></i> Vídeo Educativo sobre Transplante Renal</h3>
   <p>Assista ao vídeo abaixo para entender melhor o processo de transplante renal:</p>
   <video controls>
@@ -161,7 +152,7 @@
 <!-- Firebase e contador por dispositivo -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, doc, getDoc, setDoc, collection, addDoc, query, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBdtnzQob-don9p2iOlUtoLcPD7GU2hcD0",
@@ -175,10 +166,9 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
 const votosCollection = collection(db, "votos");
 
-// Gera ou recupera um ID único do dispositivo
+// ID único do dispositivo
 let deviceId = localStorage.getItem("deviceId");
 if (!deviceId) {
   deviceId = crypto.randomUUID();
@@ -193,7 +183,6 @@ async function carregarContador() {
     const snapshot = await getDocs(votosCollection);
     contadorDiv.innerText = "Apoiadores: " + snapshot.size;
 
-    // Verifica se o dispositivo já votou
     snapshot.forEach(doc => {
       if (doc.id === deviceId) {
         btn.textContent = "Você já apoiou ✅";
@@ -231,11 +220,8 @@ carregarContador();
 <!-- Google Maps -->
 <script>
 function initMap() {
-  const sjc = { lat: -23.1896, lng: -45.9009 }; 
-  const map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 12,
-    center: sjc
-  });
+  const sjc = { lat: -23.1896, lng: -45.9009 };
+  const map = new google.maps.Map(document.getElementById("map"), { zoom: 12, center: sjc });
 
   const hospitals = [
     { name: "Santa Casa de São José dos Campos", position: { lat: -23.1827, lng: -45.8814 }, url: "https://www.santacasasjc.com.br/" },
@@ -244,21 +230,14 @@ function initMap() {
   ];
 
   hospitals.forEach(hospital => {
-    const marker = new google.maps.Marker({
-      position: hospital.position,
-      map: map,
-      title: hospital.name
-    });
-    const infoWindow = new google.maps.InfoWindow({
-      content: `<strong>${hospital.name}</strong><br><a href="${hospital.url}" target="_blank">${hospital.url}</a>`
-    });
+    const marker = new google.maps.Marker({ position: hospital.position, map: map, title: hospital.name });
+    const infoWindow = new google.maps.InfoWindow({ content: `<strong>${hospital.name}</strong><br><a href="${hospital.url}" target="_blank">${hospital.url}</a>` });
     marker.addListener("click", () => infoWindow.open(map, marker));
   });
 }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDu0JPKySi4HoQvk3S47rXqbnjkmv8_Vjg&callback=initMap" async defer></script>
 
-<!-- Rodapé -->
 <footer>
   <p>Desenvolvido por: Eliana, Gustavo, Icaro, Isabelli e Suzana</p>
   <p>&copy; 2025 - Todos os direitos reservados</p>
