@@ -25,6 +25,7 @@
     a:hover { text-decoration:underline; }
     .btn { display:inline-block; background:#388e3c; color:#fff; padding:0.7rem 1.2rem; border-radius:8px; border:none; cursor:pointer; margin-top:10px; font-size:1rem; transition:0.3s; }
     .btn:hover { background:#1b5e20; }
+    .btn:disabled { background: #aaa; cursor: not-allowed; }
     .count { margin-top:8px; font-weight:bold; color:#2e7d32; }
     video { width:100%; max-width:560px; height:auto; margin-top:10px; border-radius:8px; }
     #map { width:100%; height:400px; margin-top:10px; border-radius:8px; }
@@ -40,7 +41,7 @@
   <p>Informações completas sobre doação de órgãos e transplante renal</p>
 </header>
 
-<!-- Conteúdo do site -->
+<!-- Seções do site -->
 <section>
   <h2><i class="fas fa-info-circle"></i> 1. Introdução</h2>
   <p><strong>O que é o transplante renal:</strong> Substituição de um rim doente por um rim saudável, devolvendo qualidade de vida.</p>
@@ -157,49 +158,80 @@
   <div id="contador" class="count">Apoiadores: 0</div>
 </section>
 
-<!-- Firebase -->
+<!-- Firebase e contador por dispositivo -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, doc, getDoc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc, collection, addDoc, query, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "SUA_API_KEY",
-  authDomain: "SEU_PROJECT_ID.firebaseapp.com",
-  projectId: "SEU_PROJECT_ID",
-  storageBucket: "SEU_PROJECT_ID.appspot.com",
-  messagingSenderId: "SEU_SENDER_ID",
-  appId: "SEU_APP_ID"
+  apiKey: "AIzaSyBdtnzQob-don9p2iOlUtoLcPD7GU2hcD0",
+  authDomain: "transplante-renal-six.firebaseapp.com",
+  projectId: "transplante-renal-six",
+  storageBucket: "transplante-renal-six.firebasestorage.app",
+  messagingSenderId: "124301750618",
+  appId: "1:124301750618:web:4392c7985ab53bf6a44363",
+  measurementId: "G-92BB88TCVS"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const apoioRef = doc(db, "apoios", "contador");
+
+const votosCollection = collection(db, "votos");
+
+// Gera ou recupera um ID único do dispositivo
+let deviceId = localStorage.getItem("deviceId");
+if (!deviceId) {
+  deviceId = crypto.randomUUID();
+  localStorage.setItem("deviceId", deviceId);
+}
+
+const btn = document.getElementById("apoiarBtn");
+const contadorDiv = document.getElementById("contador");
 
 async function carregarContador() {
-  const snap = await getDoc(apoioRef);
-  if (snap.exists()) {
-    document.getElementById("contador").innerText = "Apoiadores: " + snap.data().total;
-  } else {
-    await setDoc(apoioRef, { total: 0 });
-    document.getElementById("contador").innerText = "Apoiadores: 0";
+  try {
+    const snapshot = await getDocs(votosCollection);
+    contadorDiv.innerText = "Apoiadores: " + snapshot.size;
+
+    // Verifica se o dispositivo já votou
+    snapshot.forEach(doc => {
+      if (doc.id === deviceId) {
+        btn.textContent = "Você já apoiou ✅";
+        btn.disabled = true;
+      }
+    });
+  } catch (error) {
+    console.error("Erro ao carregar contador:", error);
+    contadorDiv.innerText = "Erro ao carregar contador";
   }
 }
 
 async function adicionarApoio() {
-  await updateDoc(apoioRef, { total: increment(1) });
-  carregarContador();
-  document.getElementById("apoiarBtn").textContent = "Apoio registrado ✅";
+  btn.disabled = true;
+  try {
+    const docRef = doc(db, "votos", deviceId);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      btn.textContent = "Você já apoiou ✅";
+      return;
+    }
+    await setDoc(docRef, { timestamp: Date.now() });
+    await carregarContador();
+    btn.textContent = "Apoio registrado ✅";
+  } catch (error) {
+    console.error("Erro ao registrar apoio:", error);
+    alert("Houve um problema ao registrar seu apoio. Veja o console.");
+  }
 }
 
-document.getElementById("apoiarBtn").addEventListener("click", adicionarApoio);
+btn.addEventListener("click", adicionarApoio);
 carregarContador();
 </script>
 
 <!-- Google Maps -->
 <script>
 function initMap() {
-  const sjc = { lat: -23.1896, lng: -45.9009 }; // centro de SJC
-
+  const sjc = { lat: -23.1896, lng: -45.9009 }; 
   const map = new google.maps.Map(document.getElementById("map"), {
     zoom: 12,
     center: sjc
@@ -234,4 +266,3 @@ function initMap() {
 
 </body>
 </html>
-
