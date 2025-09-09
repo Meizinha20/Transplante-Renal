@@ -1,78 +1,76 @@
-<!-- Firebase e contador Realtime Database -->
+<!-- Coloque isso **antes de fechar o </body>** -->
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, get, set, runTransaction } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBdtnzQob-don9p2iOlUtoLcPD7GU2hcD0",
-  authDomain: "transplante-renal-six.firebaseapp.com",
-  databaseURL: "https://transplante-renal-six-default-rtdb.firebaseio.com",
-  projectId: "transplante-renal-six",
-  storageBucket: "transplante-renal-six.firebasestorage.app",
-  messagingSenderId: "124301750618",
-  appId: "1:124301750618:web:4392c7985ab53bf6a44363",
-  measurementId: "G-92BB88TCVS"
-};
+  const firebaseConfig = {
+    apiKey: "AIzaSyBdtnzQob-don9p2iOlUtoLcPD7GU2hcD0",
+    authDomain: "transplante-renal-six.firebaseapp.com",
+    databaseURL: "https://transplante-renal-six-default-rtdb.firebaseio.com",
+    projectId: "transplante-renal-six",
+    storageBucket: "transplante-renal-six.firebasestorage.app",
+    messagingSenderId: "124301750618",
+    appId: "1:124301750618:web:4392c7985ab53bf6a44363"
+  };
 
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
 
-// Gera ou recupera um ID único do dispositivo
-let deviceId = localStorage.getItem("deviceId");
-if (!deviceId) {
-  deviceId = crypto.randomUUID();
-  localStorage.setItem("deviceId", deviceId);
-}
+  let deviceId = localStorage.getItem("deviceId");
+  if (!deviceId) {
+    deviceId = crypto.randomUUID();
+    localStorage.setItem("deviceId", deviceId);
+  }
 
-const btn = document.getElementById("apoiarBtn");
-const contadorDiv = document.getElementById("contador");
+  const btn = document.getElementById("apoiarBtn");
+  const contadorDiv = document.getElementById("contador");
 
-async function carregarContador() {
-  try {
-    const snapshot = await get(ref(db, 'votos/'));
-    let total = 0;
-    let jaVotou = false;
+  async function carregarContador() {
+    try {
+      const snapshot = await get(ref(db, 'votos/'));
+      let total = 0;
+      let jaVotou = false;
 
-    if (snapshot.exists()) {
-      const data = snapshot.val();
-      total = Object.keys(data).length;
-      if (data[deviceId]) jaVotou = true;
-    }
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        total = Object.keys(data).length;
+        if (data[deviceId]) jaVotou = true;
+      }
 
-    contadorDiv.innerText = "Apoiadores: " + total;
+      contadorDiv.innerText = "Apoiadores: " + total;
 
-    if (jaVotou) {
-      btn.textContent = "Você já apoiou ✅";
-      btn.disabled = true;
-    } else {
-      btn.textContent = "Quero apoiar";
+      if (jaVotou) {
+        btn.textContent = "Você já apoiou ✅";
+        btn.disabled = true;
+      } else {
+        btn.textContent = "Quero apoiar";
+        btn.disabled = false;
+      }
+    } catch (error) {
+      console.error("Erro ao carregar contador:", error);
+      contadorDiv.innerText = "Erro ao carregar contador";
       btn.disabled = false;
     }
-  } catch (error) {
-    console.error("Erro ao carregar contador:", error);
-    contadorDiv.innerText = "Erro ao carregar contador";
-    btn.disabled = false;
   }
-}
 
-async function adicionarApoio() {
-  btn.disabled = true;
-  try {
-    const votoRef = ref(db, 'votos/' + deviceId);
-    const snapshot = await get(votoRef);
-    if (snapshot.exists()) {
-      btn.textContent = "Você já apoiou ✅";
-      return;
+  async function adicionarApoio() {
+    btn.disabled = true;
+    try {
+      const votoRef = ref(db, 'votos/' + deviceId);
+      const snapshot = await get(votoRef);
+      if (snapshot.exists()) {
+        btn.textContent = "Você já apoiou ✅";
+        return;
+      }
+      await set(votoRef, { timestamp: Date.now() });
+      await carregarContador();
+      btn.textContent = "Apoio registrado ✅";
+    } catch (error) {
+      console.error("Erro ao registrar apoio:", error);
+      alert("Houve um problema ao registrar seu apoio. Veja o console.");
     }
-    await set(votoRef, { timestamp: Date.now() });
-    await carregarContador();
-    btn.textContent = "Apoio registrado ✅";
-  } catch (error) {
-    console.error("Erro ao registrar apoio:", error);
-    alert("Houve um problema ao registrar seu apoio. Veja o console.");
   }
-}
 
-btn.addEventListener("click", adicionarApoio);
-carregarContador();
+  btn.addEventListener("click", adicionarApoio);
+  carregarContador();
 </script>
